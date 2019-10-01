@@ -63,6 +63,13 @@ bool q_insert_head(queue_t *q, char *s);
 bool q_insert_tail(queue_t *q, char *s);
 
 /*
+  Create a new element and store string data in it.
+  Return pointer to elment if successful.
+  Return NULL if fail to allocate space.
+ */
+list_ele_t *create_node(char *s);
+
+/*
   Attempt to remove element from head of queue.
   Return true if successful.
   Return false if queue is NULL or empty.
