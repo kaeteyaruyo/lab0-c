@@ -99,6 +99,11 @@ bool q_insert_tail(queue_t *q, char *s)
     return true;
 }
 
+/*
+  Create a new element and store string data in it.
+  Return pointer to elment if successful.
+  Return NULL if fail to allocate space.
+ */
 list_ele_t *create_node(char *s)
 {
     /* Create a new element of queue */
