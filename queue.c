@@ -58,27 +58,14 @@ bool q_insert_head(queue_t *q, char *s)
     if (q == NULL)
         return false;
 
-    /* Create a new element of queue */
-    /* If failed, return false */
-    list_ele_t *newh;
-    newh = (list_ele_t *) malloc(sizeof(list_ele_t));
+    list_ele_t *newh = create_node(s);
     if (newh == NULL)
         return false;
 
-    /* Allocate space for string copy */
-    /* If failed, return false */
-    newh->value = (char *) malloc(sizeof(char) * (strlen(s) + 1));
-    if (newh->value == NULL) {
-        free(newh);
-        return false;
-    }
-
-    /* Copy string and maintain queue information */
-    strcpy(newh->value, s);
-    ++(q->size);
-
+    /* Maintain queue information */
     newh->next = q->head;
     q->head = newh;
+    ++(q->size);
     if (q_size(q) == 1)
         q->tail = newh;
     return true;
@@ -97,31 +84,41 @@ bool q_insert_tail(queue_t *q, char *s)
     if (q == NULL)
         return false;
 
-    /* Create a new element of queue */
-    /* If failed, return false */
-    list_ele_t *newt;
-    newt = (list_ele_t *) malloc(sizeof(list_ele_t));
+    list_ele_t *newt = create_node(s);
     if (newt == NULL)
         return false;
 
-    /* Allocate space for string copy */
-    /* If failed, return false */
-    newt->value = (char *) malloc(sizeof(char) * (strlen(s) + 1));
-    if (newt->value == NULL) {
-        free(newt);
-        return false;
-    }
-
-    /* Copy string and maintain queue information */
-    strcpy(newt->value, s);
-    ++(q->size);
-
+    /* Maintain queue information */
     q->tail->next = newt;
     newt->next = NULL;
     q->tail = newt;
+    ++(q->size);
+
     if (q_size(q) == 1)
         q->head = newt;
     return true;
+}
+
+list_ele_t *create_node(char *s)
+{
+    /* Create a new element of queue */
+    /* If failed, return NULL */
+    list_ele_t *new;
+    new = (list_ele_t *) malloc(sizeof(list_ele_t));
+    if (new == NULL)
+        return NULL;
+
+    /* Allocate space for string copy */
+    /* If failed, free space fot element and return NULL */
+    new->value = (char *) malloc(sizeof(char) * (strlen(s) + 1));
+    if (new->value == NULL) {
+        free(new);
+        return NULL;
+    }
+
+    /* Copy string and return element */
+    strcpy(new->value, s);
+    return new;
 }
 
 /*
